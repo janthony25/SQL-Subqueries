@@ -13,3 +13,17 @@ SELECT COUNT(*) FROM Sales.SalesOrderDetail
 WHERE ProductID = (
 SELECT ProductID FROM Production.Product
 WHERE Name = 'Cable Lock' )
+
+
+
+------ WHICH PRODUCTS HAVE NOT BEEN ORDERED YET?
+SELECT * FROM Production.Product
+WHERE ProductID NOT IN
+(SELECT ProductID FROM Sales.SalesOrderDetail)
+
+
+--
+SELECT * FROM Production.Product as P
+WHERE NOT EXISTS
+	(SELECT ProductID FROM Sales.SalesOrderDetail as S
+	WHERE P.ProductID = S.ProductID)
